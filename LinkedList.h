@@ -19,7 +19,6 @@ struct ListNode
 struct LinkedList
 {
     ListNode* pHead;
-    ListNode* pTail;
     int elementCount;
 };
 
@@ -38,19 +37,17 @@ void LinkedList_Insert(LinkedListIterator*, ElementType);
 void LinkedList_PopBack(LinkedList*);
 void LinkedList_PopFront(LinkedList*);
 void LinkedList_Delete(LinkedListIterator*);
+bool LinkedList_IsEmpty(LinkedList*);
 int LinkedList_GetElementCount(LinkedList*);
 LinkedListIterator LinkedList_GetHeadIterator(LinkedList*);
 LinkedListIterator LinkedList_GetTailIterator(LinkedList*);
 
-bool LinkedListIterator_IsValid(LinkedListIterator*);
-bool LinkedListIterator_IsNull(LinkedListIterator*);
-bool LinkedListIterator_IsBelong(LinkedListIterator*, LinkedList*);
+bool LinkedListIterator_IsBelongTo(LinkedListIterator*, LinkedList*);
+bool LinkedListIterator_IsEnd(LinkedListIterator*);
 bool LinkedListIterator_IsHead(LinkedListIterator*);
 bool LinkedListIterator_IsTail(LinkedListIterator*);
 void LinkedListIterator_GoNext(LinkedListIterator*);
 void LinkedListIterator_GoLast(LinkedListIterator*);
-void LinkedListIterator_GoHead(LinkedListIterator*);
-void LinkedListIterator_GoTail(LinkedListIterator*);
 ElementType LinkedListIterator_GetElement(LinkedListIterator*);
 
 #endif
