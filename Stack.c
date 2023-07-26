@@ -23,6 +23,7 @@ void Stack_Clear(Stack* pStack)
 void Stack_Extend(Stack* pStack)
 {
     ElementType* pElementListNew = (ElementType*)malloc(sizeof(ElementType) * pStack->capacity * 2);
+
     memcpy(pElementListNew, pStack->pElementList, sizeof(ElementType) * pStack->elementCount);
     free(pStack->pElementList);
     pStack->pElementList = pElementListNew;
@@ -41,16 +42,15 @@ void Stack_Push(Stack* pStack, ElementType element)
 
 void Stack_Pop(Stack* pStack)
 {
-    pStack->elementCount -= 1;
+    if (pStack->elementCount > 0)
+    {
+        pStack->elementCount -= 1;
+    }
 }
 
 ElementType Stack_GetTopElement(Stack* pStack)
 {
-    if (pStack->elementCount > 0)
-    {
-        return pStack->pElementList[pStack->elementCount - 1];
-    }
-    return -1;
+    return pStack->pElementList[pStack->elementCount - 1];
 }
 
 bool Stack_IsEmpty(Stack* pStack)

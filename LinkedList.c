@@ -2,7 +2,7 @@
 
 void LinkedList_Init(LinkedList* pLinkedList)
 {
-    pLinkedList->pHead = (ListNode*)malloc(sizeof(LinkedList));
+    pLinkedList->pHead = (ListNode*)malloc(sizeof(ListNode));
     pLinkedList->pHead->pNext = pLinkedList->pHead;
     pLinkedList->pHead->pLast = pLinkedList->pHead;
     pLinkedList->elementCount = 0;
@@ -40,6 +40,7 @@ void LinkedList_SetNewNode(LinkedList* pLinkedList, ListNode* pNewNode, ListNode
     pNewNode->pLast = pPreNode;
     pPreNode->pNext = pNewNode;
     pNewNode->pNext->pLast = pNewNode;
+    pLinkedList->elementCount += 1;
 }
 
 void LinkedList_PushBack(LinkedList* pLinkedList, ElementType element)
@@ -65,6 +66,7 @@ void LinkedList_DeleteNode(LinkedList* pLinkedList, ListNode* pDeleteNode)
 {
     pDeleteNode->pLast->pNext = pDeleteNode->pNext;
     pDeleteNode->pNext->pLast = pDeleteNode->pLast;
+    pLinkedList->elementCount -= 1;
     free(pDeleteNode);
 }
 

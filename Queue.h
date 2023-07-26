@@ -12,12 +12,12 @@ struct QueueNode
 {
     ElementType element;
     QueueNode* pNext;
+    QueueNode* pLast;
 };
 
 struct Queue
 {
     QueueNode* pHead;
-    QueueNode* pTail;
     int elementCount;
 };
 

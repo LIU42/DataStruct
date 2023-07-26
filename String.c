@@ -137,11 +137,7 @@ char* String_GetData(String* pString)
 
 char String_GetCharAt(String* pString, int index)
 {
-    if (index >= 0 && index < String_GetLength(pString))
-    {
-        return pString->pCharData[index];
-    }
-    return '\0';
+    return pString->pCharData[index];
 }
 
 int String_GetLength(String* pString)
@@ -153,15 +149,14 @@ int String_GetLength(String* pString)
     return 0;
 }
 
-String String_GetSubString(String* pSourceString, int startIndex, int endIndex)
+String String_GetSubString(String* pString, int startIndex, int endIndex)
 {
     String subString;
 
     subString.pCharData = (char*)malloc(endIndex - startIndex + 1);
-    subString.capacity = endIndex - startIndex + 1;
-
-    memcpy(subString.pCharData, pSourceString->pCharData + startIndex, endIndex - startIndex);
     subString.pCharData[endIndex - startIndex] = '\0';
+    subString.capacity = endIndex - startIndex + 1;
+    memcpy(subString.pCharData, pString->pCharData + startIndex, endIndex - startIndex);
     
     return subString;
 }

@@ -22,10 +22,11 @@ void ArrayList_Clear(ArrayList* pArrayList)
 
 void ArrayList_Extend(ArrayList* pArrayList)
 {
-    ElementType* pElementListNew = (ElementType*)malloc(sizeof(ElementType) * pArrayList->capacity * 2);
-    memcpy(pElementListNew, pArrayList->pElementList, sizeof(ElementType) * pArrayList->elementCount);
+    ElementType* pNewElementList = (ElementType*)malloc(sizeof(ElementType) * pArrayList->capacity * 2);
+    
+    memcpy(pNewElementList, pArrayList->pElementList, sizeof(ElementType) * pArrayList->elementCount);
     free(pArrayList->pElementList);
-    pArrayList->pElementList = pElementListNew;
+    pArrayList->pElementList = pNewElementList;
     pArrayList->capacity *= 2;
 }
 
@@ -33,16 +34,13 @@ void ArrayList_Insert(ArrayList* pArrayList, int index, ElementType element)
 {
     ElementType* pElementList = pArrayList->pElementList;
 
-    if (index >= 0 && index <= pArrayList->elementCount)
+    if (pArrayList->elementCount >= pArrayList->capacity)
     {
-        if (pArrayList->elementCount >= pArrayList->capacity)
-        {
-            ArrayList_Extend(pArrayList);
-        }
-        memcpy(pElementList + index + 1, pElementList + index, sizeof(ElementType) * (pArrayList->elementCount - index));
-        pArrayList->pElementList[index] = element;
-        pArrayList->elementCount += 1;
+        ArrayList_Extend(pArrayList);
     }
+    memcpy(pElementList + index + 1, pElementList + index, sizeof(ElementType) * (pArrayList->elementCount - index));
+    pArrayList->pElementList[index] = element;
+    pArrayList->elementCount += 1;
 }
 
 void ArrayList_PushBack(ArrayList* pArrayList, ElementType element)
@@ -59,11 +57,8 @@ void ArrayList_Delete(ArrayList* pArrayList, int index)
 {
     ElementType* pElementList = pArrayList->pElementList;
 
-    if (index >= 0 && index < pArrayList->elementCount)
-    {
-        memcpy(pElementList + index, pElementList + index + 1, sizeof(ElementType) * (pArrayList->elementCount - index - 1));
-        pArrayList->elementCount -= 1;
-    }
+    memcpy(pElementList + index, pElementList + index + 1, sizeof(ElementType) * (pArrayList->elementCount - index - 1));
+    pArrayList->elementCount -= 1;
 }
 
 void ArrayList_PopBack(ArrayList* pArrayList)
@@ -78,11 +73,12 @@ void ArrayList_PopFront(ArrayList* pArrayList)
 
 ElementType ArrayList_GetElement(ArrayList* pArrayList, int index)
 {
-    if (index >= 0 && index < pArrayList->elementCount)
-    {
-        return pArrayList->pElementList[index];
-    }
-    return -1;
+    return pArrayList->pElementList[index];
+}
+
+bool ArrayList_IsEmpty(ArrayList* pArrayList)
+{
+    return pArrayList->elementCount == 0;
 }
 
 int ArrayList_GetElementCount(ArrayList* pArrayList)

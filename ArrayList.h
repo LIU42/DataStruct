@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <memory.h>
+#include <stdbool.h>
 
 typedef int ElementType;
 typedef struct ArrayList ArrayList;
@@ -25,6 +26,7 @@ void ArrayList_PopBack(ArrayList*);
 void ArrayList_PopFront(ArrayList*);
 
 ElementType ArrayList_GetElement(ArrayList*, int);
+bool ArrayList_IsEmpty(ArrayList*);
 int ArrayList_GetElementCount(ArrayList*);
 int ArrayList_GetCapacity(ArrayList*);
 
