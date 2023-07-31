@@ -12,15 +12,15 @@ struct String
     int capacity;
 };
 
-void String_Init(String*, char*);
+void String_Init(String*, const char*);
 void String_Destroy(String*);
-void String_SetData(String*, char*);
+void String_SetData(String*, const char*);
 void String_Insert(String*, String*, int);
 void String_Append(String*, String*);
 void String_Delete(String*, int, int);
 int String_Find(String*, String*);
 
-char* String_GetData(String*);
+const char* String_GetData(String*);
 char String_GetCharAt(String*, int);
 int String_GetLength(String*);
 String String_GetSubString(String*, int, int);

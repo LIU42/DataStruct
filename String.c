@@ -1,13 +1,19 @@
 #include "String.h"
 
-void String_Init(String* pString, char* pCharData)
+int String_GetCharDataCapacity(const char* pCharData)
 {
-    pString->capacity = 1;
+    int capacity = 1;
 
     for (int i = 0; pCharData[i] != '\0'; i++)
     {
-        pString->capacity += 1;
+        capacity += 1;
     }
+    return capacity;
+}
+
+void String_Init(String* pString, const char* pCharData)
+{
+    pString->capacity = String_GetCharDataCapacity(pCharData);
     pString->pCharData = (char*)malloc(pString->capacity);
     memcpy(pString->pCharData, pCharData, pString->capacity);
 }
@@ -18,7 +24,7 @@ void String_Destroy(String* pString)
     pString->capacity = 0;
 }
 
-void String_SetData(String* pString, char* pCharData)
+void String_SetData(String* pString, const char* pCharData)
 {
     String_Destroy(pString);
     String_Init(pString, pCharData);
@@ -130,7 +136,7 @@ int String_Find(String* pFullString, String* pPatternString)
     return findIndex;
 }
 
-char* String_GetData(String* pString)
+const char* String_GetData(String* pString)
 {
     return pString->pCharData;
 }
