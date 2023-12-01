@@ -1,6 +1,6 @@
 #include "ArrayList.h"
 
-void ArrayList_Init(ArrayList* pArrayList, int capacity)
+void ArrayList_Init(ArrayList* pArrayList, unsigned int capacity)
 {
     pArrayList->pElementList = (ElementType*)malloc(sizeof(ElementType) * capacity);
     pArrayList->capacity = capacity;
@@ -30,7 +30,7 @@ void ArrayList_Extend(ArrayList* pArrayList)
     pArrayList->capacity *= 2;
 }
 
-void ArrayList_Insert(ArrayList* pArrayList, int index, ElementType element)
+void ArrayList_Insert(ArrayList* pArrayList, unsigned int index, ElementType element)
 {
     ElementType* pElementList = pArrayList->pElementList;
 
@@ -53,7 +53,7 @@ void ArrayList_PushFront(ArrayList* pArrayList, ElementType element)
     ArrayList_Insert(pArrayList, 0, element);
 }
 
-void ArrayList_Delete(ArrayList* pArrayList, int index)
+void ArrayList_Delete(ArrayList* pArrayList, unsigned int index)
 {
     ElementType* pElementList = pArrayList->pElementList;
 
@@ -71,7 +71,7 @@ void ArrayList_PopFront(ArrayList* pArrayList)
     ArrayList_Delete(pArrayList, 0);
 }
 
-ElementType ArrayList_GetElement(ArrayList* pArrayList, int index)
+ElementType ArrayList_GetElement(ArrayList* pArrayList, unsigned int index)
 {
     return pArrayList->pElementList[index];
 }
@@ -81,12 +81,12 @@ bool ArrayList_IsEmpty(ArrayList* pArrayList)
     return pArrayList->elementCount == 0;
 }
 
-int ArrayList_GetElementCount(ArrayList* pArrayList)
+unsigned int ArrayList_GetElementCount(ArrayList* pArrayList)
 {
     return pArrayList->elementCount;
 }
 
-int ArrayList_GetCapacity(ArrayList* pArrayList)
+unsigned int ArrayList_GetCapacity(ArrayList* pArrayList)
 {
     return pArrayList->capacity;
 }

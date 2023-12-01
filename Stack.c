@@ -1,6 +1,6 @@
 #include "Stack.h"
 
-void Stack_Init(Stack* pStack, int capacity)
+void Stack_Init(Stack* pStack, unsigned int capacity)
 {
     pStack->pElementList = (ElementType*)malloc(sizeof(ElementType) * capacity);
     pStack->capacity = capacity;
@@ -58,12 +58,12 @@ bool Stack_IsEmpty(Stack* pStack)
     return pStack->elementCount == 0;
 }
 
-int Stack_GetElementCount(Stack* pStack)
+unsigned int Stack_GetElementCount(Stack* pStack)
 {
     return pStack->elementCount;
 }
 
-int Stack_GetCapacity(Stack* pStack)
+unsigned int Stack_GetCapacity(Stack* pStack)
 {
     return pStack->capacity;
 }

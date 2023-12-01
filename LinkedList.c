@@ -93,7 +93,7 @@ bool LinkedList_IsEmpty(LinkedList* pLinkedList)
     return pLinkedList->elementCount == 0;
 }
 
-int LinkedList_GetElementCount(LinkedList* pLinkedList)
+unsigned int LinkedList_GetElementCount(LinkedList* pLinkedList)
 {
     return pLinkedList->elementCount;
 }

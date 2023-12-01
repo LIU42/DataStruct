@@ -11,23 +11,23 @@ typedef struct ArrayList ArrayList;
 struct ArrayList
 {
     ElementType* pElementList;
-    int capacity;
-    int elementCount;
+    unsigned int capacity;
+    unsigned int elementCount;
 };
 
-void ArrayList_Init(ArrayList*, int);
-void ArrayList_Destroy(ArrayList*);
-void ArrayList_Clear(ArrayList*);
-void ArrayList_Insert(ArrayList*, int, ElementType);
-void ArrayList_PushBack(ArrayList*, ElementType);
-void ArrayList_PushFront(ArrayList*, ElementType);
-void ArrayList_Delete(ArrayList*, int);
-void ArrayList_PopBack(ArrayList*);
-void ArrayList_PopFront(ArrayList*);
+void ArrayList_Init(ArrayList* pArrayList, unsigned int capacity);
+void ArrayList_Destroy(ArrayList* pArrayList);
+void ArrayList_Clear(ArrayList* pArrayList);
+void ArrayList_Insert(ArrayList* pArrayList, unsigned int index, ElementType element);
+void ArrayList_PushBack(ArrayList* pArrayList, ElementType element);
+void ArrayList_PushFront(ArrayList* pArrayList, ElementType element);
+void ArrayList_Delete(ArrayList* pArrayList, unsigned int index);
+void ArrayList_PopBack(ArrayList* pArrayList);
+void ArrayList_PopFront(ArrayList* pArrayList);
 
-ElementType ArrayList_GetElement(ArrayList*, int);
-bool ArrayList_IsEmpty(ArrayList*);
-int ArrayList_GetElementCount(ArrayList*);
-int ArrayList_GetCapacity(ArrayList*);
+ElementType ArrayList_GetElement(ArrayList* pArrayList, unsigned int index);
+bool ArrayList_IsEmpty(ArrayList* pArrayList);
+unsigned int ArrayList_GetElementCount(ArrayList* pArrayList);
+unsigned int ArrayList_GetCapacity(ArrayList* pArrayList);
 
 #endif

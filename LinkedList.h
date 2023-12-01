@@ -5,8 +5,8 @@
 #include <stdbool.h>
 
 typedef int ElementType;
-typedef struct LinkedList LinkedList;
 typedef struct ListNode ListNode;
+typedef struct LinkedList LinkedList;
 typedef struct LinkedListIterator LinkedListIterator;
 
 struct ListNode
@@ -19,7 +19,7 @@ struct ListNode
 struct LinkedList
 {
     ListNode* pHead;
-    int elementCount;
+    unsigned int elementCount;
 };
 
 struct LinkedListIterator
@@ -28,26 +28,26 @@ struct LinkedListIterator
     ListNode* pCurrentNode;
 };
 
-void LinkedList_Init(LinkedList*);
-void LinkedList_Destroy(LinkedList*);
-void LinkedList_Clear(LinkedList*);
-void LinkedList_PushBack(LinkedList*, ElementType);
-void LinkedList_PushFront(LinkedList*, ElementType);
-void LinkedList_Insert(LinkedListIterator*, ElementType);
-void LinkedList_PopBack(LinkedList*);
-void LinkedList_PopFront(LinkedList*);
-void LinkedList_Delete(LinkedListIterator*);
-bool LinkedList_IsEmpty(LinkedList*);
-int LinkedList_GetElementCount(LinkedList*);
-LinkedListIterator LinkedList_GetHeadIterator(LinkedList*);
-LinkedListIterator LinkedList_GetTailIterator(LinkedList*);
+void LinkedList_Init(LinkedList* pLinkedList);
+void LinkedList_Destroy(LinkedList* pLinkedList);
+void LinkedList_Clear(LinkedList* pLinkedList);
+void LinkedList_PushBack(LinkedList* pLinkedList, ElementType element);
+void LinkedList_PushFront(LinkedList* pLinkedList, ElementType element);
+void LinkedList_Insert(LinkedListIterator* pLinkedList, ElementType element);
+void LinkedList_PopBack(LinkedList* pLinkedList);
+void LinkedList_PopFront(LinkedList* pLinkedList);
+void LinkedList_Delete(LinkedListIterator* pIterator);
+bool LinkedList_IsEmpty(LinkedList* pLinkedList);
+unsigned int LinkedList_GetElementCount(LinkedList* pLinkedList);
+LinkedListIterator LinkedList_GetHeadIterator(LinkedList* pLinkedList);
+LinkedListIterator LinkedList_GetTailIterator(LinkedList* pLinkedList);
 
-bool LinkedListIterator_IsBelongTo(LinkedListIterator*, LinkedList*);
-bool LinkedListIterator_IsEnd(LinkedListIterator*);
-bool LinkedListIterator_IsHead(LinkedListIterator*);
-bool LinkedListIterator_IsTail(LinkedListIterator*);
-void LinkedListIterator_GoNext(LinkedListIterator*);
-void LinkedListIterator_GoLast(LinkedListIterator*);
-ElementType LinkedListIterator_GetElement(LinkedListIterator*);
+bool LinkedListIterator_IsBelongTo(LinkedListIterator* pIterator, LinkedList* pLinkedList);
+bool LinkedListIterator_IsEnd(LinkedListIterator* pIterator);
+bool LinkedListIterator_IsHead(LinkedListIterator* pIterator);
+bool LinkedListIterator_IsTail(LinkedListIterator* pIterator);
+void LinkedListIterator_GoNext(LinkedListIterator* pIterator);
+void LinkedListIterator_GoLast(LinkedListIterator* pIterator);
+ElementType LinkedListIterator_GetElement(LinkedListIterator* pIterator);
 
 #endif

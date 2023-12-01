@@ -18,17 +18,17 @@ struct QueueNode
 struct Queue
 {
     QueueNode* pHead;
-    int elementCount;
+    unsigned int elementCount;
 };
 
-void Queue_Init(Queue*);
-void Queue_Destroy(Queue*);
-void Queue_Clear(Queue*);
-void Queue_Enqueue(Queue*, ElementType);
-void Queue_Dequeue(Queue*);
+void Queue_Init(Queue* pQueue);
+void Queue_Destroy(Queue* pQueue);
+void Queue_Clear(Queue* pQueue);
+void Queue_Enqueue(Queue* pQueue, ElementType element);
+void Queue_Dequeue(Queue* pQueue);
 
-ElementType Queue_GetFrontElement(Queue*);
-bool Queue_IsEmpty(Queue*);
-int Queue_GetElementCount(Queue*);
+ElementType Queue_GetFrontElement(Queue* pQueue);
+bool Queue_IsEmpty(Queue* pQueue);
+unsigned int Queue_GetElementCount(Queue* pQueue);
 
 #endif

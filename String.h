@@ -9,20 +9,20 @@ typedef struct String String;
 struct String
 {
     char* pCharData;
-    int capacity;
+    unsigned int capacity;
 };
 
-void String_Init(String*, const char*);
-void String_Destroy(String*);
-void String_SetData(String*, const char*);
-void String_Insert(String*, String*, int);
-void String_Append(String*, String*);
-void String_Delete(String*, int, int);
-int String_Find(String*, String*);
+void String_Init(String* pString, const char* pCharData);
+void String_Destroy(String* pString);
+void String_SetData(String* pString, const char* pCharData);
+void String_Insert(String* pTargetString, String* pAddString, unsigned int index);
+void String_Append(String* pTargetString, String* pAddString);
+void String_Delete(String* pString, unsigned int startIndex, unsigned int endIndex);
+int String_Find(String* pFullString, String* pPatternString);
 
-const char* String_GetData(String*);
-char String_GetCharAt(String*, int);
-int String_GetLength(String*);
-String String_GetSubString(String*, int, int);
+const char* String_GetData(String* pString);
+char String_GetCharAt(String* pString, unsigned int index);
+unsigned int String_GetLength(String* pString);
+String String_GetSubString(String* pString, unsigned int startIndex, unsigned int endIndex);
 
 #endif

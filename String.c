@@ -1,8 +1,8 @@
 #include "String.h"
 
-int String_GetCharDataCapacity(const char* pCharData)
+unsigned int String_GetCharDataCapacity(const char* pCharData)
 {
-    int capacity = 1;
+    unsigned int capacity = 1;
 
     for (int i = 0; pCharData[i] != '\0'; i++)
     {
@@ -30,7 +30,7 @@ void String_SetData(String* pString, const char* pCharData)
     String_Init(pString, pCharData);
 }
 
-void String_Insert(String* pTargetString, String* pAddString, int index)
+void String_Insert(String* pTargetString, String* pAddString, unsigned int index)
 {
     if (index >= 0 && index < pTargetString->capacity)
     {
@@ -57,7 +57,7 @@ void String_Append(String* pTargetString, String* pAddString)
     String_Insert(pTargetString, pAddString, String_GetLength(pTargetString));
 }
 
-void String_Delete(String* pString, int startIndex, int endIndex)
+void String_Delete(String* pString, unsigned int startIndex, unsigned int endIndex)
 {
     if (startIndex >= 0 && endIndex < pString->capacity && startIndex < endIndex)
     {
@@ -141,12 +141,12 @@ const char* String_GetData(String* pString)
     return pString->pCharData;
 }
 
-char String_GetCharAt(String* pString, int index)
+char String_GetCharAt(String* pString, unsigned int index)
 {
     return pString->pCharData[index];
 }
 
-int String_GetLength(String* pString)
+unsigned int String_GetLength(String* pString)
 {
     if (pString->capacity > 0)
     {
@@ -155,7 +155,7 @@ int String_GetLength(String* pString)
     return 0;
 }
 
-String String_GetSubString(String* pString, int startIndex, int endIndex)
+String String_GetSubString(String* pString, unsigned int startIndex, unsigned int endIndex)
 {
     String subString;
 

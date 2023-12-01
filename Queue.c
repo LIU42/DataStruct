@@ -66,7 +66,7 @@ bool Queue_IsEmpty(Queue* pQueue)
     return pQueue->elementCount == 0;
 }
 
-int Queue_GetElementCount(Queue* pQueue)
+unsigned int Queue_GetElementCount(Queue* pQueue)
 {
     return pQueue->elementCount;
 }

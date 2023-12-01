@@ -11,19 +11,19 @@ typedef struct Stack Stack;
 struct Stack
 {
     ElementType* pElementList;
-    int capacity;
-    int elementCount;
+    unsigned int capacity;
+    unsigned int elementCount;
 };
 
-void Stack_Init(Stack*, int);
-void Stack_Destroy(Stack*);
-void Stack_Clear(Stack*);
-void Stack_Push(Stack*, ElementType);
-void Stack_Pop(Stack*);
+void Stack_Init(Stack* pStack, unsigned int capacity);
+void Stack_Destroy(Stack* pStack);
+void Stack_Clear(Stack* pStack);
+void Stack_Push(Stack* pStack, ElementType element);
+void Stack_Pop(Stack* pStack);
 
-ElementType Stack_GetTopElement(Stack*);
-bool Stack_IsEmpty(Stack*);
-int Stack_GetElementCount(Stack*);
-int Stack_GetCapacity(Stack*);
+ElementType Stack_GetTopElement(Stack* pStack);
+bool Stack_IsEmpty(Stack* pStack);
+unsigned int Stack_GetElementCount(Stack* pStack);
+unsigned int Stack_GetCapacity(Stack* pStack);
 
 #endif
