@@ -3,11 +3,24 @@
 LinkedList* LinkedList_Create()
 {
     LinkedList* pLinkedList = (LinkedList*)malloc(sizeof(LinkedList));
+
     pLinkedList->elementCount = 0;
     pLinkedList->pHead = (ListNode*)malloc(sizeof(ListNode));
     pLinkedList->pHead->pNext = pLinkedList->pHead;
     pLinkedList->pHead->pLast = pLinkedList->pHead;
+
     return pLinkedList;
+}
+
+LinkedList* LinkedList_Copy(LinkedList* pLinkedList)
+{  
+    LinkedList* pNewLinkedList = LinkedList_Create();
+
+    for (ListNode* pCurNode = pLinkedList->pHead->pNext; pCurNode != pLinkedList->pHead; pCurNode = pCurNode->pNext)
+    {
+        LinkedList_AddBack(pNewLinkedList, pCurNode->element);
+    }
+    return pNewLinkedList;
 }
 
 void LinkedList_Destroy(LinkedList* pLinkedList)
@@ -18,6 +31,7 @@ void LinkedList_Destroy(LinkedList* pLinkedList)
     }
     free(pLinkedList->pHead);
     free(pLinkedList);
+
     pLinkedList = NULL;
 }
 
@@ -40,6 +54,7 @@ void LinkedList_Clear(LinkedList* pLinkedList)
 void LinkedList_AddNode(LinkedList* pLinkedList, ListNode* pPreNode, ElementType element)
 {
     ListNode* pNewNode = (ListNode*)malloc(sizeof(ListNode));
+    
     pNewNode->element = element;
     pNewNode->pNext = pPreNode->pNext;
     pNewNode->pLast = pPreNode;
@@ -48,12 +63,12 @@ void LinkedList_AddNode(LinkedList* pLinkedList, ListNode* pPreNode, ElementType
     pLinkedList->elementCount += 1;
 }
 
-void LinkedList_PushBack(LinkedList* pLinkedList, ElementType element)
+void LinkedList_AddBack(LinkedList* pLinkedList, ElementType element)
 {
     LinkedList_AddNode(pLinkedList, pLinkedList->pHead->pLast, element);
 }
 
-void LinkedList_PushFront(LinkedList* pLinkedList, ElementType element)
+void LinkedList_AddFront(LinkedList* pLinkedList, ElementType element)
 {
     LinkedList_AddNode(pLinkedList, pLinkedList->pHead, element);
 }
@@ -72,17 +87,17 @@ void LinkedList_DeleteNode(LinkedList* pLinkedList, ListNode* pDeleteNode)
     free(pDeleteNode);
 }
 
-void LinkedList_PopBack(LinkedList* pLinkedList)
+void LinkedList_RemoveBack(LinkedList* pLinkedList)
 {
     LinkedList_DeleteNode(pLinkedList, pLinkedList->pHead->pLast);
 }
 
-void LinkedList_PopFront(LinkedList* pLinkedList)
+void LinkedList_RemoveFront(LinkedList* pLinkedList)
 {
     LinkedList_DeleteNode(pLinkedList, pLinkedList->pHead->pNext);
 }
 
-void LinkedList_Delete(LinkedListIterator* pIterator)
+void LinkedList_Remove(LinkedListIterator* pIterator)
 {
     pIterator->pCurrentNode = pIterator->pCurrentNode->pNext;
     LinkedList_DeleteNode(pIterator->pLinkedList, pIterator->pCurrentNode->pLast);

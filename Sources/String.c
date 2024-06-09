@@ -1,161 +1,181 @@
 #include "String.h"
 
-String* String_Create(const char* pData, int capacity)
+int String_GetCharArrayLength(const char* pCharArray)
+{
+    int arrayLength = 0;
+
+    while (pCharArray[arrayLength] != '\0')
+    {
+        arrayLength += 1;
+    }
+    return arrayLength;
+}
+
+void String_CapacityGrowth(String* pString, int targetLength)
+{
+    while (pString->capacity <= targetLength)
+    {
+        pString->capacity <<= 1;
+    }
+    pString->pCharArray = (char*)realloc(pString->pCharArray, pString->capacity);
+}
+
+String* String_Create(const char* pCharArray)
 {
     String* pString = (String*)malloc(sizeof(String));
+
+    pString->pCharArray = NULL;
     pString->length = 0;
-    pString->capacity = capacity;
+    pString->capacity = 16;
 
-    while (pData[pString->length] != '\0')
-    {
-        pString->length += 1;
-    }
-    int dataCapacity = pString->length + 1;
-
-    if (capacity < dataCapacity)
-    {
-        pString->capacity = dataCapacity;
-    }
-    pString->pData = (char*)malloc(pString->capacity);
-    memcpy(pString->pData, pData, dataCapacity);
+    String_SetCharArray(pString, pCharArray);
     return pString;
+}
+
+String* String_Copy(String* pString)
+{
+    String* pNewString = (String*)malloc(sizeof(String));
+
+    pNewString->pCharArray = (char*)malloc(pString->capacity);
+    pNewString->length = pString->length;
+    pNewString->capacity = pString->capacity;
+
+    memcpy(pNewString->pCharArray, pString->pCharArray, pString->length + 1);
+    return pNewString;
+}
+
+String* String_GetSubString(String* pString, int index, int length)
+{
+    String* pSubString = (String*)malloc(sizeof(String));
+
+    pSubString->pCharArray = (char*)malloc(pString->capacity);
+    pSubString->pCharArray[length] = '\0';
+    pSubString->length = length;
+    pSubString->capacity = pString->capacity;
+
+    memcpy(pSubString->pCharArray, pString->pCharArray + index, length);
+    return pSubString;
+}
+
+void String_Clear(String* pString)
+{
+    pString->pCharArray[0] = '\0';
+    pString->length = 0;
 }
 
 void String_Destroy(String* pString)
 {
-    free(pString->pData);
+    free(pString->pCharArray);
     free(pString);
+    
     pString = NULL;
 }
 
-void String_SetData(String* pString, const char* pData)
+void String_SetCharArray(String* pString, const char* pCharArray)
 {
-    pString->length = 0;
+    pString->length = String_GetCharArrayLength(pCharArray);
 
-    while (pData[pString->length] != '\0')
-    {
-        pString->length += 1;
-    }
-    int dataCapacity = pString->length + 1;
-
-    if (pString->capacity < dataCapacity)
-    {
-        pString->pData = (char*)realloc(pString->pData, dataCapacity);
-        pString->capacity = dataCapacity;
-    }
-    memcpy(pString->pData, pData, pString->capacity);
-}
-
-void String_CapacityGrowth(String* pTargetString, String* pInsertString)
-{
-    int sumCapacity = pTargetString->length + pInsertString->length + 1;
-
-    if (pTargetString->capacity < sumCapacity)
-    {
-        pTargetString->pData = (char*)realloc(pTargetString->pData, sumCapacity);
-        pTargetString->capacity = sumCapacity;
-    }
+    String_CapacityGrowth(pString, pString->length);
+    memcpy(pString->pCharArray, pCharArray, pString->length + 1);
 }
 
 void String_Insert(String* pTargetString, String* pInsertString, int index)
 {
-    String_CapacityGrowth(pTargetString, pInsertString);
-    memcpy(pTargetString->pData + pInsertString->length + index, pTargetString->pData + index, pTargetString->length - index + 1);
-    memcpy(pTargetString->pData + index, pInsertString->pData, pInsertString->length);
+    String_CapacityGrowth(pTargetString, pTargetString->length + pInsertString->length);
+
+    char* pTargetArray = pTargetString->pCharArray;
+    char* pInsertArray = pInsertString->pCharArray;
+
+    memcpy(pTargetArray + pInsertString->length + index, pTargetArray + index, pTargetString->length - index + 1);
+    memcpy(pTargetArray + index, pInsertArray, pInsertString->length);
     pTargetString->length += pInsertString->length;
 }
 
 void String_Append(String* pTargetString, String* pAppendString)
 {
-    String_CapacityGrowth(pTargetString, pAppendString);
-    memcpy(pTargetString->pData + pTargetString->length, pAppendString->pData, pAppendString->length + 1);
+    String_CapacityGrowth(pTargetString, pTargetString->length + pAppendString->length);
+
+    char* pTargetArray = pTargetString->pCharArray;
+    char* pAppendArray = pAppendString->pCharArray;
+
+    memcpy(pTargetArray + pTargetString->length, pAppendArray, pAppendString->length + 1);
     pTargetString->length += pAppendString->length;
 }
 
-void String_Delete(String* pString, int startIndex, int endIndex)
+void String_Remove(String* pString, int index, int length)
 {
-    memcpy(pString->pData + startIndex, pString->pData + endIndex, pString->length - endIndex + 1);
-    pString->length -= endIndex - startIndex;
+    int movedIndex = (index + length < pString->length) ? index + length : pString->length;
+
+    memcpy(pString->pCharArray + index, pString->pCharArray + movedIndex, pString->length - movedIndex + 1);
+    pString->length -= length;
 }
 
-void String_AdjustCapacity(String* pString, int capacity)
+int* String_GetNextArray(String* pPatternString)
 {
-    if (capacity < pString->length + 1)
-    {
-        capacity = pString->length + 1;
-    }
-    pString->pData = (char*)realloc(pString->pData, capacity);
-    pString->capacity = capacity;
-}
+    int* pNextArray = (int*)malloc(sizeof(int) * pPatternString->length);
 
-int* String_GetNextList(String* pPatternString)
-{
-    int* pNextList = (int*)malloc(sizeof(int) * pPatternString->length);
     int nextIndex = 1;
     int nextTemp = 0;
-    pNextList[0] = 0;
+
+    pNextArray[0] = 0;
 
     while (nextIndex < pPatternString->length)
     {
-        if (pPatternString->pData[nextTemp] == pPatternString->pData[nextIndex])
+        if (pPatternString->pCharArray[nextTemp] == pPatternString->pCharArray[nextIndex])
         {
-            pNextList[nextIndex] = nextTemp + 1;
+            pNextArray[nextIndex] = nextTemp + 1;
             nextTemp += 1;
             nextIndex += 1;
         }
         else if (nextTemp > 0)
         {
-            nextTemp = pNextList[nextTemp - 1];
+            nextTemp = pNextArray[nextTemp - 1];
         }
         else if (nextTemp == 0)
         {
-            pNextList[nextIndex] = 0;
+            pNextArray[nextIndex] = 0;
             nextIndex += 1;
         }
     }
-    return pNextList;
+    return pNextArray;
 }
 
-int String_Find(String* pFullString, String* pPatternString)
+int String_Search(String* pSearchString, String* pPatternString)
 {
-    int* pNextList = String_GetNextList(pPatternString);
-    int fullIndex = 0;
-    int patternIndex = 0;
-    int findIndex = -1;
+    int* pNextArray = String_GetNextArray(pPatternString);
 
-    while (fullIndex < pFullString->length)
+    int searchIndex = 0;
+    int patternIndex = 0;
+    int resultIndex = -1;
+
+    while (searchIndex < pSearchString->length)
     {
-        if (pFullString->pData[fullIndex] == pPatternString->pData[patternIndex])
+        if (pSearchString->pCharArray[searchIndex] == pPatternString->pCharArray[patternIndex])
         {
-            fullIndex += 1;
+            searchIndex += 1;
             patternIndex += 1;
         }
         else if (patternIndex > 0)
         {
-            patternIndex = pNextList[patternIndex - 1];
+            patternIndex = pNextArray[patternIndex - 1];
         }
         else if (patternIndex == 0)
         {
-            fullIndex += 1;
+            searchIndex += 1;
         }
         if (patternIndex == pPatternString->length)
         {
-            findIndex = fullIndex - patternIndex;
+            resultIndex = searchIndex - patternIndex;
             break;
         }
     }
-    free(pNextList);
-    return findIndex;
+    free(pNextArray);
+    return resultIndex;
 }
 
-const char* String_GetData(String* pString)
+const char* String_GetCharArray(String* pString)
 {
-    return pString->pData;
-}
-
-char String_GetCharAt(String* pString, int index)
-{
-    return pString->pData[index];
+    return pString->pCharArray;
 }
 
 int String_GetLength(String* pString)
@@ -168,13 +188,7 @@ int String_GetCapacity(String* pString)
     return pString->capacity;
 }
 
-String* String_GetSubString(String* pString, int startIndex, int endIndex)
+char String_GetCharAt(String* pString, int index)
 {
-    String* pSubString = (String*)malloc(sizeof(String));
-    pSubString->length = endIndex - startIndex;
-    pSubString->capacity = pSubString->length + 1;
-    pSubString->pData = (char*)malloc(pSubString->capacity);
-    pSubString->pData[pSubString->length] = '\0';
-    memcpy(pSubString->pData, pString->pData + startIndex, pSubString->length);
-    return pSubString;
+    return pString->pCharArray[index];
 }

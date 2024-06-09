@@ -3,16 +3,31 @@
 Stack* Stack_Create(int capacity)
 {
     Stack* pStack = (Stack*)malloc(sizeof(Stack));
+
     pStack->capacity = capacity;
     pStack->elementCount = 0;
     pStack->pElementList = (ElementType*)malloc(sizeof(ElementType) * capacity);
+
     return pStack;
+}
+
+Stack* Stack_Copy(Stack* pStack)
+{
+    Stack* pNewStack = (Stack*)malloc(sizeof(Stack));
+
+    pNewStack->pElementList = (ElementType*)malloc(sizeof(ElementType) * pStack->capacity);
+    pNewStack->capacity = pStack->capacity;
+    pNewStack->elementCount = pStack->elementCount;
+
+    memcpy(pNewStack->pElementList, pStack->pElementList, sizeof(ElementType) * pStack->capacity);
+    return pNewStack;
 }
 
 void Stack_Destroy(Stack* pStack)
 {
     free(pStack->pElementList);
     free(pStack);
+
     pStack = NULL;
 }
 
@@ -30,7 +45,7 @@ void Stack_Push(Stack* pStack, ElementType element)
 {
     if (pStack->elementCount >= pStack->capacity)
     {
-        pStack->capacity *= 2;
+        pStack->capacity <<= 1;
         pStack->pElementList = (ElementType*)realloc(pStack->pElementList, sizeof(ElementType) * pStack->capacity);
     }
     pStack->pElementList[pStack->elementCount] = element;

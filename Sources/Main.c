@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "ArrayList.h"
 #include "LinkedList.h"
 #include "Stack.h"

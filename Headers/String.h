@@ -6,24 +6,27 @@
 
 typedef struct String 
 {
-    char* pData;
+    char* pCharArray;
     int length;
     int capacity;
 } String;
 
-String* String_Create(const char* pData, int capacity);
+String* String_Create(const char* pCharArray);
+String* String_Copy(String* pString);
+String* String_GetSubString(String* pString, int index, int length);
+
+void String_SetCharArray(String* pString, const char* pCharArray);
+void String_Clear(String* pString);
 void String_Destroy(String* pString);
-void String_SetData(String* pString, const char* pData);
+
 void String_Insert(String* pTargetString, String* pInsertString, int index);
 void String_Append(String* pTargetString, String* pAppendString);
-void String_Delete(String* pString, int startIndex, int endIndex);
-void String_AdjustCapacity(String* pString, int capacity);
-int String_Find(String* pFullString, String* pPatternString);
+void String_Remove(String* pString, int index, int length);
+int String_Search(String* pSearchString, String* pPatternString);
 
-const char* String_GetData(String* pString);
-char String_GetCharAt(String* pString, int index);
+const char* String_GetCharArray(String* pString);
 int String_GetLength(String* pString);
 int String_GetCapacity(String* pString);
-String* String_GetSubString(String* pString, int startIndex, int endIndex);
+char String_GetCharAt(String* pString, int index);
 
 #endif

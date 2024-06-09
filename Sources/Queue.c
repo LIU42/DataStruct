@@ -3,10 +3,23 @@
 Queue* Queue_Create()
 {
     Queue* pQueue = (Queue*)malloc(sizeof(Queue));
+
     pQueue->elementCount = 0;
     pQueue->pHead = (QueueNode*)malloc(sizeof(QueueNode));
     pQueue->pHead->pNext = pQueue->pHead;
+
     return pQueue;
+}
+
+Queue* Queue_Copy(Queue* pQueue)
+{
+    Queue* pNewQueue = Queue_Create();
+
+    for (QueueNode* pCurNode = pQueue->pHead->pNext; pCurNode != pQueue->pHead; pCurNode = pCurNode->pNext)
+    {
+        Queue_Enqueue(pNewQueue, pCurNode->element);
+    }
+    return pNewQueue;
 }
 
 void Queue_Destroy(Queue* pQueue)
@@ -17,6 +30,7 @@ void Queue_Destroy(Queue* pQueue)
     }
     free(pQueue->pHead);
     free(pQueue);
+
     pQueue = NULL;
 }
 
@@ -34,6 +48,7 @@ void Queue_Clear(Queue* pQueue)
     {
         pPreNode = pCurNode;
         pCurNode = pCurNode->pNext;
+
         free(pPreNode);
     }
     pQueue->pHead->pNext = pQueue->pHead;
@@ -43,6 +58,7 @@ void Queue_Clear(Queue* pQueue)
 void Queue_Enqueue(Queue* pQueue, ElementType element)
 {
     QueueNode* pEnqueueNode = (QueueNode*)malloc(sizeof(QueueNode));
+
     pQueue->elementCount += 1;
     pQueue->pHead->element = element;
     pEnqueueNode->pNext = pQueue->pHead->pNext;
@@ -53,8 +69,10 @@ void Queue_Enqueue(Queue* pQueue, ElementType element)
 void Queue_Dequeue(Queue* pQueue)
 {
     QueueNode* pDequeueNode = pQueue->pHead->pNext;
+
     pQueue->elementCount -= 1;
     pQueue->pHead->pNext = pDequeueNode->pNext;
+
     free(pDequeueNode);
 }
 

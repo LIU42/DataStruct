@@ -1,7 +1,6 @@
 #ifndef __ARRAYLIST_H__
 #define __ARRAYLIST_H__
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
 #include <stdbool.h>
@@ -16,16 +15,20 @@ typedef struct ArrayList
 } ArrayList;
 
 ArrayList* ArrayList_Create(int capacity);
-void ArrayList_Destroy(ArrayList* pArrayList);
+ArrayList* ArrayList_Copy(ArrayList* pArrayList);
+
 bool ArrayList_IsEmpty(ArrayList* pArrayList);
+void ArrayList_Destroy(ArrayList* pArrayList);
 void ArrayList_Clear(ArrayList* pArrayList);
-void ArrayList_Insert(ArrayList* pArrayList, int index, ElementType element);
-void ArrayList_PushBack(ArrayList* pArrayList, ElementType element);
-void ArrayList_PushFront(ArrayList* pArrayList, ElementType element);
-void ArrayList_Delete(ArrayList* pArrayList, int index);
-void ArrayList_PopBack(ArrayList* pArrayList);
-void ArrayList_PopFront(ArrayList* pArrayList);
 void ArrayList_AdjustCapacity(ArrayList* pArrayList, int capacity);
+
+void ArrayList_Insert(ArrayList* pArrayList, int index, ElementType element);
+void ArrayList_AddBack(ArrayList* pArrayList, ElementType element);
+void ArrayList_AddFront(ArrayList* pArrayList, ElementType element);
+
+void ArrayList_Remove(ArrayList* pArrayList, int index);
+void ArrayList_RemoveBack(ArrayList* pArrayList);
+void ArrayList_RemoveFront(ArrayList* pArrayList);
 
 ElementType ArrayList_GetElement(ArrayList* pArrayList, int index);
 int ArrayList_GetElementCount(ArrayList* pArrayList);
