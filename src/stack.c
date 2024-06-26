@@ -1,4 +1,4 @@
-#include "Stack.h"
+#include "stack.h"
 
 Stack* Stack_Create(int capacity)
 {

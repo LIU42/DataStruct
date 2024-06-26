@@ -9,7 +9,7 @@ typedef int ElementType;
 typedef enum LinkedListIteratorType
 {
     ITERATOR_FORWARD,
-    ITERATOR_BACKWARD
+    ITERATOR_BACKWARD,
 } LinkedListIteratorType;
 
 typedef struct ListNode

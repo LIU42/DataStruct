@@ -1,4 +1,4 @@
-#include "ArrayList.h"
+#include "arraylist.h"
 
 ArrayList* ArrayList_Create(int capacity)
 {

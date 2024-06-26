@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "linkedlist.h"
 
 LinkedList* LinkedList_Create()
 {
